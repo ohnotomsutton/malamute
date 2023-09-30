@@ -5,24 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your One-Page Website</title>
     <style>
-        /* Add your CSS styles here */
+        /* Reset default margin and padding for all elements */
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Set a full-width background color */
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             background-color: #f0f0f0;
+            margin: 0; /* Remove default margin */
         }
 
+        /* Make the header full-width and centered */
         header {
             background-color: #333;
             color: #fff;
             padding: 20px;
         }
 
+        /* Center content in sections */
         section {
+            text-align: left;
             padding: 20px;
+            max-width: 800px; /* Adjust this width as needed */
+            margin: 0 auto; /* Center content horizontally */
         }
 
-        /* Add more styles as needed */
+        /* Make the footer full-width and centered */
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+        }
+
+        /* Add responsive styles for smaller screens */
+        @media (max-width: 768px) {
+            section {
+                padding: 10px;
+                max-width: 90%; /* Adjust for smaller screens */
+            }
+        }
     </style>
 </head>
 <body>
