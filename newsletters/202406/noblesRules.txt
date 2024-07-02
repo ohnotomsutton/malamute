@@ -1,0 +1,7 @@
+Deck: A-10 one black suit, A-10 one red suit, JQK of 3 suits, one joker.
+
+Object: The king has died without an heir, and you are gunning for the throne, but you need to win the favor of the court to back your claim. The nobles need to know where they stand in your new regime, and will side with whoever values them the most. Bid higher than your rival on each hand to claim a noble for victory points.
+
+Scoring: J = 1, Q = 2, K = 3, Joker = 4. All one rank = +3, all one suit (or house) = +3.
+
+Play: Give each player A-10 black or red. Shuffle the 10 face cards. Each turn, flip over the top face card. Both players select a bid from their hand, place it face down and reveal it at the same time. Ace is low. Higher bid wins the card. Put the used bids in a face-down discard pile. If there is a tie, take the bid back and select a different bid. If there is a tie again, that face card is discarded along with the bids. When all the face cards are gone, score your cards.
