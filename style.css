@@ -10,7 +10,8 @@ body {
 .slug,
 .slug a,
 .back a,
-.footer a {
+.footer a,
+.header a{
   text-decoration: none;
   font-weight: bold;
   font-size: 10pt;
