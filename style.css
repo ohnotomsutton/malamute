@@ -129,7 +129,7 @@ blockquote .comment {
 .gameboy tr td img {
   width: 240px;
   height: 216px;
-  image-rendering: crisp-edges;
+  image-rendering: auto;
   object-fit: contain;
 }
 
