@@ -113,6 +113,10 @@ blockquote .comment {
   text-transform: uppercase;
 }
 
+.gameboy img {
+  image-rendering: pixelated;
+}
+
 .pictures tr td,
 .gameboy tr td {
   overflow: hidden;
