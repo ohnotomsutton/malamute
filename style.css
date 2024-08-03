@@ -113,22 +113,24 @@ blockquote .comment {
   text-transform: uppercase;
 }
 
-.gameboy img {
-  image-rendering: pixelated;
-}
-
 .pictures tr td,
 .gameboy tr td {
   overflow: hidden;
 }
 
 .pictures tr td,
-.pictures tr td img,
-.gameboy tr td,
-.gameboy tr td img {
+.pictures tr td img{
   width: 250px;
   height: 250px;
   object-fit: cover;
+}
+
+.gameboy tr td,
+.gameboy tr td img {
+  width: 320px;
+  height: 288px;
+  image-rendering: pixelated;
+  object-fit: contain;
 }
 
 .card {
