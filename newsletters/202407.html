@@ -18,7 +18,7 @@
       <h3>cramming a game into 32kb</h3>
       <p>It's not easy coding with a storage cap! Thankfully, Patchy Matchy uses some clever tricks in order to keep the cost down. Learning about compression and how to cram more and more game into less space is actually a fun challenge for me.</p>
       <p>The easiest place to start is with the most storage-dense data: the graphics. One of the most effective ways I brought down the data cost is by making best use of one-bit-per-pixel (1bpp) graphics. In short, the Game Boy only shows graphics in four colors: black, dark grey, light grey, and 'white' or transparent. On the original DMG screen with the non-backlit LCD these colors would show as different shades of green-yellow. On the Game Boy Pocket it would be a more monochrome silvery black-to-white.</p>
-      <p>If you wanted to display a black and white digital image in the most rudamentary way possible, you would simply list each pixel as a 1 or a 0, and then this would be chunked into 8's. One bit per pixel, and 8 bits per byte. So for alternating black and white pixels it would look like: 01010101. This is easy because we only have two colors to show. To add those two shades of grey to our image we need to use TWO-bits-per-pixel (2bpp) to indicate each of four colors; 00: white, 01: light grey, 10: dark grey, 11: black. Then those are chunked to fill a byte, but only four pixels will fit into the same storage space where 8 fit before.</p>
+      <p>If you wanted to display a black and white digital image in the most rudamentary way possible, you would simply list each pixel as a 1 or a 0, and then this would be chunked into 8's. One bit per pixel, and 8 bits per byte. So for alternating black and white pixels it would look like: 01010101. This is easy because we only have two colors to show. To add those two shades of grey to our image we need to use TWO-bits-per-pixel (2bpp) to indicate each of four colors; 00: white, 01: light grey, 10: dark grey, 11: black. Then those are chunked to fill a byte, but only four pixels will fit into the same storage space where 8 fit before. If you've ever heard the word 'bitmap' and weren't sure what it meant, its literally a map of bits which together create an image.</p>
       <p>Here you can see an example of that with different tiles on the title screen. The Game Boy shows its graphics in tiles. The whole 8 by 8 pixel tile must be stored as either 1bpp or 2bpp. Using 1bpp where I can helps save storage space! I decided to draw the entire wave in light-gray and white to make it more recessive and make the character more dominant, but that simplified color served the dual purpose of saving storage space. Where I needed some extra tone I used dithering to fake a third color. Patchy's graphics are mostly 2bpp. Below I show the title screen, then the 1bpp and 2bpp passes.</p>
         <table class="gameboy">
         <tr>
@@ -33,7 +33,16 @@
             <td><img src="202407/gb4.png"></td>
         </tr>
        </table>
-      <p>This technique is implemented throughout the game.</p>
+      <p>This technique is implemented throughout the game. In the main game screen I used 1bpp tiles for background elements, and reused them when I thought I could get away with it.</p>
+       <table class="gameboy">
+        <tr>
+            <td><img src="202407/gb5.png"></td>
+        </tr>
+       </table>
+       <p>Another place where we save on storage is with compression. GBDK has a built in compression engine so all those 2bpp graphics (and even sometimes 1bpp graphics) can be squashed down to an even smaller storage size. The compressed size of the used graphics usually ends up being about 60%-80% of the original data. As I understand it, the way this compression works is by taking a set of bytes, and then whenever it sees them repeating in the set, it drops them and with a couple instructions, refers the decompressor back to the first time those bytes occurred.</p>
+      <p> 
+
+      
        <p>You can pre-order a cartridge of Patchy Matchy from <a href="https://modretro.com/products/patchy-matchyy">ModRetro</a>, as a launch title for their new console, the <a href="https://modretro.com/">Chromatic</a>. The cartridge is also fully Game Boy compatible. You can also get it as part of their <a href="https://modretro.com/products/release-titles-bundle">launch bundle.</a> It ships out in December!</p>
     </div>
     <div class="section">
