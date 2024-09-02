@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="back">
+       <a href="../index.html">HOME</a> ● <a href="../newsletter.html"> NEWSLETTER </a> ● <a href="202406.html">PREV</a> ● <a href="202408.html">NEXT </a> 
+    </div>
+    <div class="header">
+      <h1><a href="../index.html">malamute</a></h1>
+      <h2>NEWSLETTER - JULY 2024</h2>
+    </div>
+    <div class="feature-image">
+    </div>
+    <div class="section">
+      <h3>cramming a game into 32kb</h3>
+      <p>It's not easy coding with a storage cap! Thankfully, Patchy Matchy uses some clever tricks in order to keep the cost down. Learning about compression and how to cram more and more game into less space is actually a fun challenge for me.</p>
+      <p>The easiest place to start is with the most storage-dense data: the graphics. One of the most effective ways I brought down the data cost is by making best use of one-bit-per-pixel (1bpp) graphics. In short, the Game Boy only shows graphics in four colors: black, dark grey, light grey, and 'white' or transparent. On the original DMG screen with the non-backlit LCD these colors would show as different shades of green-yellow. On the Game Boy Pocket it would be a more monochrome silvery black-to-white. Playing a Game Boy game on Game Boy Color yielded different results, <a href="https://tcrf.net/Notes:Game_Boy_Color_Bootstrap_ROM">depending on certain inputs.</a></p>
+      <p>If you wanted to display a black and white digital image in the most rudamentary way possible, you would simply list each pixel as a 1 or a 0, and then this would be chunked into 8's. One bit per pixel, and 8 bits per byte. So for alternating black and white pixels it would look like: 01010101. This is easy because we only have two colors to show. To add those two shades of grey to our image we need to use TWO-bits-per-pixel (2bpp) to indicate each of four colors; 00: white, 01: light grey, 10: dark grey, 11: black. Then those are chunked to fill a byte, but only four pixels will fit into the same storage space where 8 fit before. If you've ever heard the word 'bitmap' and weren't sure what it meant, its literally a map of bits which together create an image.</p>
+      <p>Here you can see an example of that with different tiles on the title screen. The Game Boy shows its graphics in tiles. The whole 8 by 8 pixel tile must be stored as either 1bpp or 2bpp. Using 1bpp where I can helps save storage space! I decided to draw the entire wave in light-gray and white to make it more recessive and make the character more dominant, but that simplified color served the dual purpose of saving storage space. Where I needed some extra tone I used dithering to fake a third color. Patchy's graphics are mostly 2bpp. Below I show the title screen, then the 1bpp and 2bpp passes.</p>
+        <table class="gameboy">
+        <tr>
+            <td><img src="202407/gb1.png"></td>
+            <td><img src="202407/gb2.png""></td>
+            <td><img src="202407/gb3.png"></td>
+        </tr>
+       </table>
+      <p>Because the Game Boy displays its graphics in tiles, we can re-use tiles to further reduce the amount of data we would need to show a picture. Using <a href="https://gb-studio-tile-count.glitch.me/">this tile heat map tool</a> for GB Studio, you can see the tiles I reused coded by color. The dark red tiles are unique and have no duplicates. The ligter the tile, the more often it is reused. Tiles are reused as often as possible to reduce the amount of raw image data required. Of course, there is a trade off between how many tiles you reuse and how many must be individual tiles for the best effect. So even though the title screen is 360 individual tiles, we can use only 196 to show the entire image with a decent amount of visual variety.</p>
+       <table class="gameboy">
+        <tr>
+            <td><img src="202407/gb4.png"></td>
+        </tr>
+       </table>
+      <p>This technique is implemented throughout the game. In the main game screen I used 1bpp tiles for background elements, and reused them when I thought I could get away with it.</p>
+       <table class="gameboy">
+        <tr>
+            <td><img src="202407/gb5.png"></td>
+        </tr>
+       </table>
+       <p>Another place where we save on storage is with compression. GBDK has a built in compression engine so all those 2bpp graphics (and even sometimes 1bpp graphics) can be squashed down to an even smaller storage size. The compressed size of the used graphics usually ends up being about 60%-80% of the original data. As I understand it, the way this compression works is by taking a set of bytes, and then whenever it sees them repeating in the set, it drops them and with a couple instructions, refers the decompressor back to the first time those bytes occurred.</p>
+       <p>That's the long and short of it. Next month I'll blog about writing music for Game Boy games.<p>
+       <p>You can pre-order a cartridge of Patchy Matchy from <a href="https://modretro.com/products/patchy-matchy">ModRetro</a>, as a launch title for their new console, the <a href="https://modretro.com/">Chromatic</a>. The cartridge is also fully Game Boy compatible. You can also get it as part of their <a href="https://modretro.com/products/release-titles-bundle">launch bundle.</a> It ships out in December!</p>
+    </div>
+    <div class="section">
+      <h3>spotlight</h3>
+      <p>I did a little dev spotlight for ModRetro about making Patchy Matchy. You can watch it here!</p>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/ohxvaWSZvF8?si=nliONcDl9FRsQ4Bj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+    <div class="section">
+      <h3>just interesting</h3>
+      <p><img src="202407/gb6.png"></p>
+<p>"GB KISS was an InfraRed transfer functionality added by Hudson to some of their Gameboy games, only in Japan."</p>
+      <p>A fun novelty that you can learn more about in <a href="https://www.reddit.com/r/Gameboy/comments/dc84bf/gb_kiss_ir_communication_and_more_before_the/">this reddit post</a> and <a href="https://www.youtube.com/watch?v=uOuJ0EcA8IQ">this youtube video</a></p>
+    </div>
+     <div class="section">
+      <h3>cool tweets</h3>
+      <p>bookmarked in august</p>
+       <p>
+         <blockquote class="twitter-tweet" data-dnt="true"><p lang="en" dir="ltr">The last knight<br>~𝘢𝘳𝘸 <a href="https://t.co/TnVShExIHt">pic.twitter.com/TnVShExIHt</a></p>&mdash; ＡｂｕｅｌｏＲｅｔｒｏＷａｖｅ (@AbueloRetroWave) <a href="https://twitter.com/AbueloRetroWave/status/1816596790352769150?ref_src=twsrc%5Etfw">July 25, 2024</a></blockquote>
+       <br/>
+       <blockquote class="twitter-tweet"><p lang="en" dir="ltr">I KNOW THIS PRETTY RAVE GIRL ALWAYS THINK ABOUT HER AND WHEN SHE SAYS HI TO ME BUTTERFLIES GO RIGHT THRU ME <a href="https://t.co/rO87eKZxQR">pic.twitter.com/rO87eKZxQR</a></p>&mdash; Lux (@thisislux) <a href="https://twitter.com/thisislux/status/1820928080602398858?ref_src=twsrc%5Etfw">August 6, 2024</a></blockquote>
+     <br />
+       <blockquote class="twitter-tweet"><p lang="en" dir="ltr">China O&#39;Brien (1990) dir. Robert Clouse<a href="https://twitter.com/hashtag/CynthiaRothrock?src=hash&amp;ref_src=twsrc%5Etfw">#CynthiaRothrock</a> <a href="https://t.co/XaLQ3sZcXA">pic.twitter.com/XaLQ3sZcXA</a></p>&mdash; Martin Kessler (@MovieKessler) <a href="https://twitter.com/MovieKessler/status/1819019595459518851?ref_src=twsrc%5Etfw">August 1, 2024</a></blockquote>
+       <br />
+       <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Added some path tiles <a href="https://t.co/VFwd7tnYT1">pic.twitter.com/VFwd7tnYT1</a></p>&mdash; Pita (@pita_akm) <a href="https://twitter.com/pita_akm/status/1825115681391599677?ref_src=twsrc%5Etfw">August 18, 2024</a></blockquote>
+       <br />
+       <blockquote class="twitter-tweet"><p lang="en" dir="ltr">How it started vs. How it&#39;s going<a href="https://twitter.com/hashtag/gbstudio?src=hash&amp;ref_src=twsrc%5Etfw">#gbstudio</a> <a href="https://twitter.com/hashtag/gameboy?src=hash&amp;ref_src=twsrc%5Etfw">#gameboy</a> <a href="https://t.co/6XBHkoj9qk">pic.twitter.com/6XBHkoj9qk</a></p>&mdash; Niels de Rijk (@nderijk) <a href="https://twitter.com/nderijk/status/1824505283588055332?ref_src=twsrc%5Etfw">August 16, 2024</a></blockquote>
+      <br />
+       <blockquote class="twitter-tweet"><p lang="ja" dir="ltr">32×32ポケモンドット絵にて<br>ゴース→ゴースト→ゲンガーの進化系が揃いました！<a href="https://twitter.com/hashtag/pixelart?src=hash&amp;ref_src=twsrc%5Etfw">#pixelart</a> <a href="https://twitter.com/hashtag/%E3%83%89%E3%83%83%E3%83%88%E7%B5%B5?src=hash&amp;ref_src=twsrc%5Etfw">#ドット絵</a> <a href="https://t.co/Pbs09ldKJO">pic.twitter.com/Pbs09ldKJO</a></p>&mdash; もぺ⬛︎ドット絵 skeb募集中 (@mope_dotpict) <a href="https://twitter.com/mope_dotpict/status/1825110388490268931?ref_src=twsrc%5Etfw">August 18, 2024</a></blockquote>
+       <br />
+       <blockquote class="twitter-tweet"><p lang="da" dir="ltr">BLÅHAJ MY BELOVED💙<br>• <a href="https://twitter.com/hashtag/pixelart?src=hash&amp;ref_src=twsrc%5Etfw">#pixelart</a> • <a href="https://twitter.com/hashtag/%E3%83%89%E3%83%83%E3%83%88%E7%B5%B5?src=hash&amp;ref_src=twsrc%5Etfw">#ドット絵</a> • <a href="https://twitter.com/hashtag/%ED%94%BD%EC%85%80%EC%95%84%ED%8A%B8?src=hash&amp;ref_src=twsrc%5Etfw">#픽셀아트</a> • <a href="https://t.co/FY0LnVOrlD">pic.twitter.com/FY0LnVOrlD</a></p>&mdash; Dinchen (@dinchenix) <a href="https://twitter.com/dinchenix/status/1830660867891044499?ref_src=twsrc%5Etfw">September 2, 2024</a></blockquote>
+       <br />       
+      </p>
+      <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+    </div>
+  
+    <div class="section" id="rec">
+      <h3>games by friends</h3>
+      <h4>FEATURED! HIGHLY RECOMMENDED! SO MUCH FUN!</h4>
+      <iframe src="https://store.steampowered.com/widget/2204170/" frameborder="0" width="646" height="190"></iframe>  
+      <h4>EARLY ACCESS! Purchasing the game early helps developers as they finish the game.</h4>
+      <iframe src="https://store.steampowered.com/widget/1586990/" frameborder="0" width="646" height="190"></iframe>
+      <p>Alterium Shift was at PAX and had some cool developments! <a href="https://www.gamespress.com/Alterium-Shift-Gears-Up-for-PAX-with-New-Key-Art-Exciting-Updates-and-">Read more here.</a> </p>
+      <h4>WISHLIST! Wishlisting costs nothing and helps developers by boosting their lauch visibility, so check out these titles!</h4>
+      <iframe src="https://store.steampowered.com/widget/1350720/" frameborder="0" width="646" height="190"></iframe>
+      <iframe src="https://store.steampowered.com/widget/2704700/" frameborder="0" width="646" height="190"></iframe>
+      <iframe src="https://store.steampowered.com/widget/2333940/" frameborder="0" width="646" height="190"></iframe>
+<p>If you'd like your game featured here, get in touch!</p>
+
+    </div>
+       <div class="section">
+      <h3>anything to contribute?</h3>
+        <p>Thanks for reading! Reach out or tag me on social media to <a href="https://linktr.ee/ohnotomsutton">@ohnotomsutton</a> or reply to your newsletter email to let me know what you think or to suggest content. I'd love to get more game dev, art, and animation stuff! The goal is to have an assembly of fun, interesting or enlightening things for the first of the month, every month.</p>
+        <p>Subscribers as of 01/08/2024: 27.</p>
+    </div>
+   <div class="section">
+    </div>
+    <div class="footer">
+       <a href="../index.html">HOME</a> ● <a href="../newsletter.html"> NEWSLETTER </a> ● <a href="202405.html"> PREV</a> ● <a href="202407.html"> NEXT </a> <br /><br />
+       <a href="https://linktr.ee/ohnotomsutton">LINKS</a> <br /><br />
+      © TOM SUTTON 2024
+    </div>
+  </div>
+</div>
+</body>
+</html>
