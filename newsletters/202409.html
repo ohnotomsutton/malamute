@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="back">
+       <a href="../index.html">HOME</a> ● <a href="../newsletter.html"> NEWSLETTER </a> ● <a href="202408.html">PREV</a> ● <a href="202412.html">NEXT </a> 
+    </div>
+    <div class="header">
+      <h1><a href="../index.html">malamute</a></h1>
+      <h2>NEWSLETTER - FALL 2024</h2>
+    </div>
+    
+    <div class="section">
+      <h3>i was in japan</h3>
+    <p>Aplogies for myu absence! I was traveling: in October, I spent 2 weeks in Japan, mostly in Tokyo, where I was sightseeing and taking in my first opportunity to visit another continent. While I was there I took the chance to go to Akihabara and absorb some of their game culture. I didn't bring home any Game Boy souvenirs but I did see a lot of inspiring things. After a year of grinding on Patchy Matchy and Paw Patrol, the trip definetly energized me for my next endeavors.</p>
+    </div>
+
+    <div class="section">
+      <h3>latest updates</h3>
+        <p>I've started working on my new Game Boy project <i>Tombs of Gara</i>, a dungeon crawler with "Punch-Out!" style combat. Here are some of the techincal workarounds I've had to do so far...</p>
+        <p>Like FMT/PM, Gara is going to be a 32 kilobyte game. Why? Because the manufacturing cost is about 30% lower! Larger storage requires a (slightly) more complex PCB, additional resistors, a memory-bank-controller or logic circuit to access the additional spaced use on the ROM chip. As it is right now, cart-assembly is super easy: one ROM chip (thought in the future i may include a 0 Ohm resistor for noise filtering). Another reason is that having a well-defined ceining on the storage clamps the scope of the game. I have to be careful with how I'm using the storage space to the best effect, not only so I can fit the whole game concept in the cart, but so that I'm not succumbing to featrure-bloat and trying to add more and more things.</p>
+      <img src="/202409/ss1.png">
+        <p>Because Gara is a LARGER game than FMT/PM, in terms of the number of elements, we have to make them simpler. As such, most of the graphics in Gara are going to be 1-bit-per-pixel, instead of the Game Boy's more standards 2-bits-per-pixel. This means instead of four colors (white, light grey, dark grey, black), we are simply going to define 2 colors for most graphics. This saves on overall storage space.</p>
+      <img src="/202409/monsters.png">
+      <p>Most monster graphics were designed as 32x32 black and white sprites. The design challenge here is keeping the shapes and features simple and legible, while adding in enough detail so that the characters look distinct, unique, dynamic, and interesting. These monsters are then batched into groups of 8, and then compressed using GBDK's gb_compress for storage. When the game runs, all the monsters in that batch are decompressed to a buffer, and then the correct monster is pulled to VRAM.</p>
+       <p>Backgrounds needed a bit of attention too. Full-screen, 2bpp images would be too expensive. A 20x10 (160x80 pixel) image at 2bpp is 3200 bytes (~10% of my total storage!). So I also decided to do the background graphics in 1-bit, though I use some techniques to pack them into the ROM. Firstly, I only store less than HALF of a background image, opting for a vignette border of reused tiles around the outside, reducing the image size to 8x8 tiles or 64x64 pixels. Its stored as a black and white image, though I also include an 8-byte palette mask, which tells the Game Boy which two colors to use for each tile in the image. This way, I can have more than just black and white used to draw the image, even though each tile in the image can only use two colors. The black-and-white half-image is compressed, then at runtime, loaded to a 1024-byte memory buffer, where its mirrored beside itself to form the full image. As it is being stored in RAM, we have to draw it to VRAM before we can draw it on the screen, so each tile is then palettized according to the palette mask while being expaded to 2-bits-per-pixel and drawn to VRAM. From there, we have a 16x8 tile image ready to be drawn to the screen one tile at a time, so we can just draw them each in order on the background layer of the screen.</p>
+      <img src="/202409/backgrounds.png">
+      <p>By storing the background with these methods, it costs me about the same ROM space to store a single-background, but less with every successive background, as we are only storing half an image at 1bpp instead of a whole image at 2bpp. What could have been a 3200 bytes on the ROM becomes a 448 bytes, allowing space for more content! These limitations make for some interesting design choices. I opted to avoid the darkest color to make the background more recessed and to allow the monster and player sprites to stand out more. Decidng which tiles should then be lighter and which should be darker, and how to show light coming from the background into the foreground, becomes very tricky. With the cave, the dungeon, and the forest, I tried to make artistic choices that compliment the constraint. A lot of what I end up doing artistically is trying to find the best way to execute while understanding the limitation. Instead of being an obstacle, it becomes a style!</p>
+        <p>That is all the interesting news I have on this project for now but I'll update on more of these puzzles as I develop the game further.</p>
+    </div>
+    
+    <div class="section">
+      <h3>from the scene</h3>
+      <p>tad boy color</p>
+      <br />
+      <p>The maker of the Frog Boy Color just released their open plans for the Tad Boy Color, a miniature Game Boy Color that reflects his design philosophies and aesthetics. Its so tiny! The custom casing is really sharp. You can watch him explain his design and build process in the video below.
+      <p><iframe width="560" height="315" src="https://www.youtube.com/embed/8J0pez9aE7g?si=JOTREUJx9arK_9AA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></p>
+    </div>
+    
+    <div class="section">
+      <h3>GEARS fundraiser, win a custom modded game boy pocket</h3>
+      <p>I'm currently doing a fundraiser through my <a href="https://twitch.tv/ohnotomsutton">twitch channel</a> for <a href="https://edmontonanimalrescue.org/">Greater Edmonton Animal Rescue Society</a>, with the goal of raising $1000 for them by the end of 2024. I've got some prizes to give away to sweeten the pot, including a custom modded Game Boy Pocket, and copies of Fydo's Magic Tiles.</p>
+      <p>GEARS is a local animal welfare charity that finds homes for animals in need, and they adopted my best friend Sam to me in 2023. I'm just supporting them in their mission so they can continue to find more homes like this for dogs like him.</p>
+      <p>To be eligible for the giveaway, just follow <a href="https://twitch.tv/ohnotomsutton">my twitch account</a> (so I can send you a whisper in case you win), and donate at least $5 through the 'donate to charity' button on my twitch page. You must be over the age of majority in your country, you must ok with giving me a deliverable address to ship you your gift, and from a region where giveaways like this are legally permitted.</p>
+    </div>
+    
+    <div class="section">
+      <h3>just interesting</h3>
+    </div>
+    
+     <div class="section">
+      <h3>cool links</h3>
+      <p>bookmarked in autumn</p>
+       <p>
+
+      </p>
+    </div>
+  
+<div class="section" id="rec">
+      <h3>games by friends</h3>
+      <h4>FEATURED! HIGHLY RECOMMENDED! SO MUCH FUN!</h4>
+      <iframe src="https://store.steampowered.com/widget/2204170/" frameborder="0" width="646" height="190"></iframe>  
+      <h4>EARLY ACCESS! Purchasing the game early helps developers as they finish the game.</h4>
+      <iframe src="https://store.steampowered.com/widget/1586990/" frameborder="0" width="646" height="190"></iframe>
+  <h4>WISHLIST! Wishlisting costs nothing and helps developers by boosting their lauch visibility, so check out these titles!</h4>
+      <iframe src="https://store.steampowered.com/widget/1350720/" frameborder="0" width="646" height="190"></iframe>
+      <iframe src="https://store.steampowered.com/widget/2704700/" frameborder="0" width="646" height="190"></iframe>
+      <iframe src="https://store.steampowered.com/widget/2333940/" frameborder="0" width="646" height="190"></iframe>
+<p>If you'd like your game or project featured here, get in touch!</p>
+
+    </div>
+    
+       <div class="section">
+      <h3>anything to contribute?</h3>
+        <p>Thanks for reading! Reach out or tag me on social media to <a href="https://linktr.ee/ohnotomsutton">@ohnotomsutton</a> or reply to your newsletter email to let me know what you think or to suggest content. I'd love to get more game dev, art, and animation stuff! The goal is to have an assembly of fun, interesting or enlightening things for the first of the month, every month.</p>
+        <p>Subscribers as of 17/11/2024: 32.</p>
+    </div>
+    
+   <div class="section">
+    </div>
+    <div class="footer">
+       <a href="../index.html">HOME</a> ● <a href="../newsletter.html"> NEWSLETTER </a> ● <a href="202408.html"> PREV</a> ● <a href="2024012.html"> NEXT </a> <br /><br />
+       <a href="https://linktr.ee/ohnotomsutton">LINKS</a> <br /><br />
+      © TOM SUTTON 2024
+    </div>
+  </div>
+</div>
+</body>
+</html>
